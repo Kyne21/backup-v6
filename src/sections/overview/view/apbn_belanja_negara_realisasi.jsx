@@ -20,7 +20,7 @@ export default function AppView() {
         const mappedData = collectionData.map((doc, index) => ({
           id: index + 1, // Buat ID berdasarkan indeks (atau gunakan doc.id jika ada)
           belanja: doc.belanja || 0, // Pastikan ada fallback jika nilai tidak tersedia
-          tahun: doc.thn || 0, // Menggunakan variabel `tahun`
+          thn: doc.thn || 0, // Menggunakan variabel `tahun`
         }));
   
         // Urutkan data berdasarkan `tahun` secara ascending
@@ -46,7 +46,7 @@ export default function AppView() {
 
         <Grid xs={12} md={6} lg={8}>
           <AppWebsiteVisits
-            title="Target Belanja Negara Setiap Tahun"
+            title="Realisasi Belanja Negara Setiap Tahun"
             subheader="Asli"
             chart={{
               labels: users.map(user => user.tahun),

@@ -46,7 +46,7 @@ export default function AppView() {
 
         <Grid xs={12} md={6} lg={8}>
           <AppWebsiteVisits
-            title="Keseimbagnan Primer"
+            title="Keseimbangan Primer"
             subheader="Asli"
             chart={{
               labels: users.map(user => user.tahun),

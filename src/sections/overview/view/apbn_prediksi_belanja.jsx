@@ -46,7 +46,7 @@ export default function AppView() {
 
         <Grid xs={12} md={6} lg={8}>
           <AppWebsiteVisits
-            title="Prediksi Pendapatan Negara Setiap Tahun"
+            title="Prediksi Belanja Negara Setiap Tahun"
             subheader="Asli"
             chart={{
               labels: users.map(user => user.tahun),

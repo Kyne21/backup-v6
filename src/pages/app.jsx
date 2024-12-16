@@ -7,16 +7,14 @@ import PdbT1 from '../sections/overview/view/pdb_T1'
 import PdbT2 from '../sections/overview/view/pdb_T2'
 import PdbT3 from '../sections/overview/view/pdb_T3'
 import PdbT4 from '../sections/overview/view/pdb_T4'
-import PdbTahunan from '../sections/overview/view/pdb_tahunan'
+import PdbTahunan from '../sections/overview/view/pdb_Tahunan'
+import PdbKontribusiTahunan from '../sections/overview/view/pdb_kontribusi_tahunan'
+
 // ----------------------------------------------------------------------
 
 export default function AppPage() {
   return (
-    <>
-      <Helmet>
-        <title> Dashboard | Minimal UI </title>
-      </Helmet>
-      
+    <div>
       <Header />
       {/* <UploadData/> */}
       {/* Linechart */}
@@ -25,8 +23,9 @@ export default function AppPage() {
       <PdbT3/>
       <PdbT4/>
       <PdbTahunan/>
+      <PdbKontribusiTahunan/>
 
       {/* <AppView /> */}
-    </>
+    </div>
   );
 }

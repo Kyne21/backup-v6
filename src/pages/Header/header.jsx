@@ -64,13 +64,13 @@ export default function Example() {
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
 
           <a href="/" className="text-sm/6 font-semibold text-gray-900">
-            Home
+            Produk Domestik Bruto
           </a>
           <a href="/page1" className="text-sm/6 font-semibold text-gray-900">
-            Page 1
+            Pajak
           </a>
           <a href="/page2" className="text-sm/6 font-semibold text-gray-900">
-            Page 2
+            APBN
           </a>
         </PopoverGroup>
       </nav>

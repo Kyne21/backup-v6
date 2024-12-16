@@ -13,7 +13,7 @@ export default function AppView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const collectionData = await fetchCollectionData("T1");
+        const collectionData = await fetchCollectionData("PDBT");
         
         const mappedData = collectionData.map((doc, index) => ({
           id: index + 1,
@@ -42,20 +42,15 @@ export default function AppView() {
         <Grid xs={12} md={6} lg={8}>
           <AppWebsiteVisits
             title="Tahunan"
-            subheader="Prediksi vs Asli"
+            subheader="Asli"
             chart={{
               labels: labels,
               series: [
                 {
                   name: 'Asli',
-                  type: 'bar', // Ubah ke grafik batang
+                  type: 'line',
                   data: pdb,
                 },
-                {
-                  name: 'Prediksi',
-                  type: 'bar', // Ubah ke grafik batang
-                  data: pred,
-                }
               ],
             }}
           />

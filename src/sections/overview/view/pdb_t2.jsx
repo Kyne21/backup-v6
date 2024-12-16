@@ -42,15 +42,12 @@ export default function AppView() {
 
   return (
     <Container maxWidth="xl">
-      <Typography variant="h4" sx={{ mb: 5 }}>
-        Dashboard
-      </Typography>
 
       <Grid container spacing={3}>
 
         <Grid xs={12} md={6} lg={8}>
           <AppWebsiteVisits
-            title="Concentration"
+            title="Triwulan 2"
             subheader="Daily"
             chart={{
               labels: users.map(user => user.tahun),
@@ -67,18 +64,6 @@ export default function AppView() {
                   fill: 'solid',
                   data: pred,
                 }
-              ],
-            }}
-          />
-        </Grid>
-
-        <Grid xs={12} md={6} lg={4}>
-          <AppCurrentVisits
-            title="Water Level"
-            chart={{
-              series: [
-                { label: 'Water', value: 100 },
-                { label: 'Air', value: 20 },
               ],
             }}
           />

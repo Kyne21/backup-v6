@@ -1,33 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from "firebase/firestore";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
-import { db } from "../../../firebaseConfig";
 import fetchCollectionData from "../../../fetchData";
-import AppCurrentVisits from '../app-current-visits';
 import AppWebsiteVisits from '../app-website-visits';
 
 export default function AppView() {
   const [users, setUsers] = useState([]);
-  const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const collectionData = await fetchCollectionData("T2"); // Ganti "pdb" dengan nama koleksi Anda di Firestore
+        const collectionData = await fetchCollectionData("T2");
         
         const mappedData = collectionData.map((doc, index) => ({
-          id: index + 1, // Buat ID berdasarkan indeks (atau gunakan doc.id jika ada)
-          pdb: doc.pdb || 0, // Pastikan ada fallback jika nilai tidak tersedia
-          tahun: doc.thn || 0, // Menggunakan variabel `tahun`
+          id: index + 1,
+          pdb: doc.pdb || 0,
+          tahun: doc.thn || 0,
           prediksi: doc.pre || 0,
         }));
   
-        // Urutkan data berdasarkan `tahun` secara ascending
-        const sortedData = mappedData.sort((a, b) => a.thn - b.thn);
-  
-        setUsers(sortedData); // Update state dengan data yang sudah diurutkan
+        const sortedData = mappedData.sort((a, b) => a.tahun - b.tahun);
+        setUsers(sortedData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -36,39 +30,34 @@ export default function AppView() {
     fetchData();
   }, []);
 
-
   const pdb = users.map(user => user.pdb);
   const pred = users.map(user => user.prediksi);
+  const labels = users.map(user => user.tahun);
 
   return (
     <Container maxWidth="xl">
-
       <Grid container spacing={3}>
-
         <Grid xs={12} md={6} lg={8}>
           <AppWebsiteVisits
             title="Triwulan 2"
-            subheader="Daily"
+            subheader="Data Asli vs Prediksi"
             chart={{
-              labels: users.map(user => user.tahun),
+              labels: labels, // Tahun sebagai sumbu X
               series: [
                 {
                   name: 'Asli',
-                  type: 'line',
-                  fill: 'solid',
+                  type: 'bar', // Ubah ke grafik batang
                   data: pdb,
                 },
                 {
                   name: 'Prediksi',
-                  type: 'line',
-                  fill: 'solid',
+                  type: 'bar', // Ubah ke grafik batang
                   data: pred,
-                }
+                },
               ],
             }}
           />
         </Grid>
-
       </Grid>
     </Container>
   );

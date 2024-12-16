@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import React, { useState, useEffect } from 'react';
 import { collection, getDocs } from "firebase/firestore";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';

@@ -15,7 +15,7 @@ export default function AppView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const collectionData = await fetchCollectionData("T4"); // Ganti "pdb" dengan nama koleksi Anda di Firestore
+        const collectionData = await fetchCollectionData("T1"); // Ganti "pdb" dengan nama koleksi Anda di Firestore
         
         const mappedData = collectionData.map((doc, index) => ({
           id: index + 1, // Buat ID berdasarkan indeks (atau gunakan doc.id jika ada)
@@ -42,13 +42,15 @@ export default function AppView() {
 
   return (
     <Container maxWidth="xl">
-
+      <Typography variant="h4" sx={{ mb: 5 }}>
+        Produk Domestik Bruto
+      </Typography>
 
       <Grid container spacing={3}>
 
         <Grid xs={12} md={6} lg={8}>
           <AppWebsiteVisits
-            title="Triwulan 4"
+            title="Triwulan 1"
             subheader="Daily"
             chart={{
               labels: users.map(user => user.tahun),
@@ -69,7 +71,6 @@ export default function AppView() {
             }}
           />
         </Grid>
-
 
       </Grid>
     </Container>

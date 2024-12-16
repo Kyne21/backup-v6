@@ -3,11 +3,11 @@ import Header from 'src/pages/Header/header';
 
 import { AppView } from 'src/sections/overview/view';
 import UploadData from "../uploadData"
-import Pdb_t1 from '../sections/overview/view/pdb_t1'
-import Pdb_t2 from '../sections/overview/view/pdb_t2'
-import Pdb_t3 from '../sections/overview/view/pdb_t3'
-import Pdb_t4 from '../sections/overview/view/pdb_t4'
- 
+import PdbT1 from '../sections/overview/view/pdb_T1'
+import PdbT2 from '../sections/overview/view/pdb_T2'
+import PdbT3 from '../sections/overview/view/pdb_T3'
+import PdbT4 from '../sections/overview/view/pdb_T4'
+import PdbTahunan from '../sections/overview/view/pdb_tahunan'
 // ----------------------------------------------------------------------
 
 export default function AppPage() {
@@ -19,10 +19,13 @@ export default function AppPage() {
       
       <Header />
       {/* <UploadData/> */}
-      <Pdb_t1/> 
-      <Pdb_t2/> 
-      <Pdb_t3/> 
-      <Pdb_t4/> s
+      {/* Linechart */}
+      <PdbT1/> 
+      <PdbT2/> 
+      <PdbT3/>
+      <PdbT4/>
+      <PdbTahunan/>
+
       {/* <AppView /> */}
     </>
   );

@@ -15,13 +15,12 @@ export default function AppView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const collectionData = await fetchCollectionData("T1"); // Ganti "pdb" dengan nama koleksi Anda di Firestore
+        const collectionData = await fetchCollectionData("BNT"); // Ganti "belanja" dengan nama koleksi Anda di Firestore
         
         const mappedData = collectionData.map((doc, index) => ({
           id: index + 1, // Buat ID berdasarkan indeks (atau gunakan doc.id jika ada)
-          pdb: doc.pdb || 0, // Pastikan ada fallback jika nilai tidak tersedia
+          belanja: doc.belanja || 0, // Pastikan ada fallback jika nilai tidak tersedia
           tahun: doc.thn || 0, // Menggunakan variabel `tahun`
-          prediksi: doc.pre || 0,
         }));
   
         // Urutkan data berdasarkan `tahun` secara ascending
@@ -37,36 +36,27 @@ export default function AppView() {
   }, []);
 
 
-  const pdb = users.map(user => user.pdb);
-  const pred = users.map(user => user.prediksi);
+  const belanja = users.map(user => user.belanja);
 
   return (
     <Container maxWidth="xl">
-      <Typography variant="h4" sx={{ mb: 5 }}>
-        Produk Domestik Bruto
-      </Typography>
+
 
       <Grid container spacing={3}>
 
         <Grid xs={12} md={6} lg={8}>
           <AppWebsiteVisits
-            title="Triwulan 1"
-            subheader="Daily"
+            title="Target Belanja Negara Setiap Tahun"
+            subheader="Asli"
             chart={{
               labels: users.map(user => user.tahun),
               series: [
                 {
                   name: 'Asli',
-                  type: 'line',
-                  fill: 'solid',
-                  data: pdb,
+                  type: 'bar',
+                  data: belanja,
                 },
-                {
-                  name: 'Prediksi',
-                  type: 'line',
-                  fill: 'solid',
-                  data: pred,
-                }
+
               ],
             }}
           />

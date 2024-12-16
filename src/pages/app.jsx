@@ -24,7 +24,7 @@ export default function AppPage() {
       <PdbT4/>
       <PdbTahunan/>
       <PdbKontribusiTahunan/>
-
+  
       {/* <AppView /> */}
     </div>
   );

@@ -1,69 +1,79 @@
 import React, { useState, useEffect } from 'react';
-import { collection, getDocs } from "firebase/firestore";
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Unstable_Grid2';
-import Typography from '@mui/material/Typography';
-import { db } from "../../../firebaseConfig";
-import fetchCollectionData from "../../../fetchData";
-import AppCurrentVisits from '../app-current-visits';
-import AppWebsiteVisits from '../app-website-visits';
+import { Container, Grid, Typography } from '@mui/material';
+import fetchCollectionData from "../../../fetchData";  // Make sure this utility is correctly set up
+import AppWebsiteVisits from '../app-website-visits'; // Assuming this handles the chart rendering
 
 export default function AppView() {
   const [users, setUsers] = useState([]);
-  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true); // Add a loading state
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const collectionData = await fetchCollectionData("PPT"); // Ganti "pdb" dengan nama koleksi Anda di Firestore
+        const collectionData = await fetchCollectionData("PDNIT"); // Ganti "PRE" dengan nama koleksi Anda di Firestore
         
         const mappedData = collectionData.map((doc, index) => ({
-          id: index + 1, // Buat ID berdasarkan indeks (atau gunakan doc.id jika ada)
-          pp: doc.pp || 0, // Pastikan ada fallback jika nilai tidak tersedia
-          tahun: doc.thn || 0, // Menggunakan variabel `tahun`
+          id: index + 1, // Create ID based on index
+          pdi: doc.pdi || 0, // Fallback if value is not available
+          tahun: doc.thn || 0, // Year (tahun)
+          pdn: doc.pdn || 0, // Prediction data
         }));
-  
-        // Urutkan data berdasarkan `tahun` secara ascending
+
+        // Sort the data by `tahun` in ascending order
         const sortedData = mappedData.sort((a, b) => a.thn - b.thn);
-  
-        setUsers(sortedData); // Update state dengan data yang sudah diurutkan
+
+        setUsers(sortedData); // Set the users state with sorted data
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // Set loading to false after data fetch
       }
     };
-  
+
     fetchData();
-  }, []);
+  }, []); // Empty dependency array means this runs once when the component is mounted
 
+  // Data arrays for chart
+  const pdi = users.map(user => user.pdi);
+  const pdn = users.map(user => user.pdn);
+  const tahun = users.map(user => user.tahun);
 
-  const pp = users.map(user => user.pp);
+  if (loading) {
+    return (
+      <Container maxWidth="xl">
+        <Typography variant="h4" sx={{ mb: 5 }}>
+          Loading Data...
+        </Typography>
+      </Container>
+    );
+  }
 
   return (
     <Container maxWidth="xl">
-      <Typography variant="h4" sx={{ mb: 5 }}>
-        Produk Domestik Bruto
-      </Typography>
-
       <Grid container spacing={3}>
-
         <Grid xs={12} md={6} lg={8}>
           <AppWebsiteVisits
-            title="Target Penerimaan Perpajakan Setiap Tahun"
+            title="Penerimaan Perpajakan Target"
             subheader="Asli"
             chart={{
-              labels: users.map(user => user.tahun),
+              labels: tahun,
               series: [
                 {
-                  name: 'Asli',
-                  type: 'bar',
+                  name: 'Pajak Perdagangan Internasional',  // Original data
+                  type: 'bar',  // Line chart type
                   fill: 'solid',
-                  data: pp,
+                  data: pdi,
                 },
+                {
+                  name: 'Pajak Dalam Negeri', // Predicted data
+                  type: 'bar',  // Line chart type
+                  fill: 'solid',
+                  data: pdn,
+                }
               ],
             }}
           />
         </Grid>
-
       </Grid>
     </Container>
   );

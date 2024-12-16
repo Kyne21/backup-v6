@@ -5,28 +5,25 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import { db } from "../../../firebaseConfig";
 import fetchCollectionData from "../../../fetchData";
-import AppCurrentVisits from '../app-current-visits';
 import AppWebsiteVisits from '../app-website-visits';
 
 export default function AppView() {
   const [users, setUsers] = useState([]);
-  const [data, setData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const collectionData = await fetchCollectionData("PCP"); // Ganti "pdb" dengan nama koleksi Anda di Firestore
+        const collectionData = await fetchCollectionData("PREDIKRPP");
         
         const mappedData = collectionData.map((doc, index) => ({
-          id: index + 1, // Buat ID berdasarkan indeks (atau gunakan doc.id jika ada)
-          cp: doc.cp || 0, // Pastikan ada fallback jika nilai tidak tersedia
-          tahun: doc.thn || 0, // Menggunakan variabel `tahun`
+          id: index + 1,
+          PP: doc.PP || 0,
+          tahun: doc.thn || 0,
+          pppre: doc.pppre || 0,
         }));
   
-        // Urutkan data berdasarkan `tahun` secara ascending
-        const sortedData = mappedData.sort((a, b) => a.thn - b.thn);
-  
-        setUsers(sortedData); // Update state dengan data yang sudah diurutkan
+        const sortedData = mappedData.sort((a, b) => a.tahun - b.tahun);
+        setUsers(sortedData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -35,32 +32,34 @@ export default function AppView() {
     fetchData();
   }, []);
 
-
-  const cp = users.map(user => user.cp);
+  const PP = users.map(user => user.PP);
+  const pppre = users.map(user => user.pppre);
+  const labels = users.map(user => user.tahun);
 
   return (
     <Container maxWidth="xl">
-
       <Grid container spacing={3}>
-
         <Grid xs={12} md={6} lg={8}>
           <AppWebsiteVisits
-            title="Capaian (%) Penerimaan Perpajakan Setiap Tahun"
-            subheader="Asli"
+            title="Prediksi Penerimaan Pajak"
+            subheader="Asli vs Prediksi"
             chart={{
-              labels: users.map(user => user.tahun),
+              labels: labels,
               series: [
                 {
                   name: 'Asli',
-                  type: 'bar',
-                  fill: 'solid',
-                  data: cp,
+                  type: 'line',
+                  data: PP,
+                },
+                {
+                  name: 'Prediksi',
+                  type: 'line',
+                  data: pppre,
                 },
               ],
             }}
           />
         </Grid>
-
       </Grid>
     </Container>
   );
